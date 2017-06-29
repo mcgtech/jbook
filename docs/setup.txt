@@ -19,7 +19,7 @@ git add --all .
 git commit -m "jbook first commit"
 git remote add origin https://github.com/mcgtech/jbook.git
 git push -u origin master
-
+# install postgres client - see https://djangogirls.gitbooks.io/django-girls-tutorial-extensions/content/optional_postgresql_installation/
 
 # install crispy-forms
 pip install --upgrade django-crispy-forms
@@ -39,3 +39,27 @@ pip install django-countries
 # https://github.com/Alir3z4/django-crequest
 pip install django-crequest
 
+# setup local database
+psql
+DROP DATABASE jbook;
+CREATE DATABASE jbook;
+CREATE USER jbook_admin WITH PASSWORD 'sa2342Dfsdxx*5$';
+
+ALTER ROLE jbook_admin SET client_encoding TO 'utf8';
+ALTER ROLE jbook_admin SET default_transaction_isolation TO 'read committed';
+ALTER ROLE jbook_admin SET timezone TO 'Europe/London';
+
+GRANT ALL PRIVILEGES ON DATABASE ife_register TO jbook_admin;
+\q
+
+
+python manage.py shell < all_build/setup_users_and_groups.py
+# change the admin password for the user created in setup_users_and_groups.py to a more secure password
+
+# setup django tables
+python manage.py migrate
+python manage.py makemigrations booking
+python manage.py migrate booking
+
+# start server
+python manage.py runserver
