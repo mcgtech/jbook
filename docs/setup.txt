@@ -1,0 +1,41 @@
+# https://denhartog.com/article/2015/02/04/how-i-structure-my-django-projects/#.WVT9LRPytuU
+mkdir /Users/stephenmcgonigal/ve
+cd /Users/stephenmcgonigal/ve
+python3 -m venv jbook
+cd jbook
+source bin/activate
+cd jbook
+pip install --upgrade pip
+pip install Django==1.11.2
+django-admin startproject jbook .
+python manage.py startapp booking
+startup pycharm
+file > open > /Users/stephenmcgonigal/ve/jbook
+cd /Users/stephenmcgonigal/ve/jbook
+git init
+git config --global user.name "Steve McGonigal"
+git config --global user.email steve.mcgonigal@cottages-and-castles.co.uk
+git add --all .
+git commit -m "jbook first commit"
+git remote add origin https://github.com/mcgtech/jbook.git
+git push -u origin master
+
+
+# install crispy-forms
+pip install --upgrade django-crispy-forms
+# https://github.com/jakubroztocil/django-settings-export
+pip install django-settings-export
+pip install django-tables2
+pip install django-filter
+pip install django-widget-tweaks
+# https://github.com/brack3t/django-braces & http://django-braces.readthedocs.io/en/v1.4.0/access.html#loginrequiredmixin
+pip install django-braces
+# https://django-constance.readthedocs.io/en/latest/
+pip install "django-constance[database]"
+# https://djangogirls.gitbooks.io/django-girls-tutorial-extensions/content/optional_postgresql_installation/
+pip install psycopg2
+# https://github.com/SmileyChris/django-countries
+pip install django-countries
+# https://github.com/Alir3z4/django-crequest
+pip install django-crequest
+
