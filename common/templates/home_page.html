@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    IFE Register
+{% endblock %}
+{% block content %}
+    <div class="intro">
+        {% if user.is_authenticated == True %}
+            <p>This system maintains a register of competent fire engineers practicing in Scotland.</p>
+        {% else %}
+            <p>Welcome to the Institution of Fire Engineers (IFE) Register.</p>
+            <p>This system maintains a register of competent fire engineers practicing in Scotland.</p>
+            <p>If you would like to be added to this register then please click <a href="{% url 'engineer_signup' %}">here</a>.</p>
+        {% endif %}
+    </div>
+    <div id="footer">
+        &copy;IFE Scotland 2017
+    </div>
+{% endblock %}

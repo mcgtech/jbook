@@ -7,8 +7,11 @@ source bin/activate
 cd jbook
 pip install --upgrade pip
 pip install Django==1.11.2
+# create project
 django-admin startproject jbook .
+# create apps
 python manage.py startapp booking
+python manage.py startapp common
 startup pycharm
 file > open > /Users/stephenmcgonigal/ve/jbook
 cd /Users/stephenmcgonigal/ve/jbook
@@ -60,6 +63,10 @@ python manage.py shell < all_build/setup_users_and_groups.py
 python manage.py migrate
 python manage.py makemigrations booking
 python manage.py migrate booking
+
+# to run server
+cd /Users/stephenmcgonigal/ve/jbook
+source bin/activate
 
 # start server
 python manage.py runserver
