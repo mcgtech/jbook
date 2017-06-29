@@ -10,7 +10,7 @@ from common.views.authentication import *
 from django.core.mail import EmailMultiAlternatives
 
 def login_success(request):
-        return redirect("home")
+    return redirect("home_page")
 
 def home_page(request):
     return render(request, 'home_page.html', {})
