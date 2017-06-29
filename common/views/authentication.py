@@ -6,6 +6,9 @@ def admin_user(user):
 def anonymous_user(user):
     return user.is_anonymous()
 
+def back_office_user(user):
+    return user.is_superuser or user.groups.filter(name=settings.BO_GROUP).exists()
+
 def show_form_error(request, messages, msg, inform_support):
     messages.error(request, msg)
 

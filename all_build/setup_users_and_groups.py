@@ -8,3 +8,6 @@ except:
 
 admin_group = Group(name="admin")
 admin_group.save()
+bo_group = Group(name="back office")
+bo_group.save()
+

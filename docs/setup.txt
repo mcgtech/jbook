@@ -11,6 +11,7 @@ pip install Django==1.11.2
 django-admin startproject jbook .
 # create apps
 python manage.py startapp booking
+python manage.py startapp property
 python manage.py startapp common
 startup pycharm
 file > open > /Users/stephenmcgonigal/ve/jbook
@@ -59,6 +60,8 @@ GRANT ALL PRIVILEGES ON DATABASE jbook TO jbook_admin;
 python manage.py migrate
 python manage.py makemigrations common
 python manage.py migrate common
+python manage.py makemigrations property
+python manage.py migrate property
 python manage.py makemigrations booking
 python manage.py migrate booking
 

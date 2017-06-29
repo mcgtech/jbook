@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'common',
+    'property',
     'booking',
     'crequest',
     'django_countries',
@@ -177,11 +178,13 @@ CRISPY_FAIL_SILENTLY = not DEBUG
 
 # groups
 ADMIN_GROUP = 'admin'
+BO_GROUP = 'back office'
 
 # https://github.com/jakubroztocil/django-settings-export
 # allows us to access constants inside templates
 SETTINGS_EXPORT = [
     'ADMIN_GROUP',
+    'BO_GROUP',
 ]
 # Message types
 INFO_MSG_TYPE = 0

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load common_extras %}
+{% block title %}
+    {% if config.is_edit_form %}
+        Edit property
+    {% else %}
+        Add new property
+    {% endif %}
+{% endblock %}
+{% load staticfiles %}
+
+{% block js %}
+    {% include 'partials/inject_js_data.html' %}
+    {% include 'partials/form_edit_js_includes.html' %}
+    {% include 'partials/datepicker_js_includes.html' %}
+    {% include 'partials/formset_js_includes.html' %}
+    <script type="text/javascript" src="{% static 'js/printThis/printThis.js' %}"></script>
+    {% include 'partials/ideal_postcodes_js_includes.html' %}
+{% endblock %}
+{% block content %}
+    {% load crispy_forms_tags %}
+    <form action="{{ config.the_action }}" method="POST" id="property_edit_form">
+        {% crispy form %}
+    </form>
+
+{% endblock %}
