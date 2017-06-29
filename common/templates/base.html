@@ -18,7 +18,7 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="{% static 'css/ife.css' %}">
+        <link rel="stylesheet" href="{% static 'css/jbook.css' %}">
         {% if user.is_authenticated %}
             <link rel="stylesheet" href="{% static 'js/bootstrap_dropdown_hover/css/bootstrap-dropdownhover.css' %}">
             <script type="text/javascript" src="{% static 'js/bootstrap_dropdown_hover/js/bootstrap-dropdownhover.min.js' %}"></script>
@@ -31,9 +31,9 @@
     <body>
         {% if user.is_authenticated == False %}
             <div class="page-header">
-                <a href="{% url 'ife_register_login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
-                <h1><a href="/">Institution of Fire Engineers (IFE) Register</a></h1>
-                <h3>A register of competent fire engineers practicing in Scotland.</h3>
+                <a href="{% url 'jbook_login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
+                <h1><a href="/">jBook</a></h1>
+                <h3>An online booking, accounting & reporting engine built.</h3>
             </div>
         {% endif %}
         <div class="content container-fluid">
