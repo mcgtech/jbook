@@ -168,3 +168,7 @@ def send_email(details, request, show_msg_sent = True):
             msg_once_only(request, 'Email sent to ' + str(to_addresses), settings.SUCC_MSG_TYPE)
     except Exception as e:
         msg_once_only(request, 'Failed to email ' + str(to_addresses) + ' as an exception occurred: ' + str(e), settings.ERR_MSG_TYPE)
+
+CcyDetails = namedtuple('CcyDetails', 'iso_code ccy_symbol country_code fx_rate')
+def get_base_currency_details():
+    return CcyDetails('GBP', '£', 'GB', 1)

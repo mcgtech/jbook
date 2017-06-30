@@ -28,7 +28,7 @@ function request_conf_on_delete_in_form_edit()
 }
 
 // http://stackoverflow.com/questions/1191113/how-to-ensure-a-select-form-field-is-submitted-when-it-is-disabled
-// if I don't do this then the data in the form elemetns that are disabled are not passed in the post, so it can
+// if I don't do this then the data in the form elements that are disabled are not passed in the post, so it can
 // result in data being lost on a save
 function manage_disabled_selects_in_a_form()
 {

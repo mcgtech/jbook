@@ -11,4 +11,4 @@ def property_search(request):
     # if this becomes slow, then look at using django-tables2 & django-filters - see booking search for example
     # of this
     properties = Property.objects.all()
-    return render(request, 'property_search.html', {'properties': properties,})
+    return render(request, 'property_search.html', {'properties': properties, 'base_ccy_details' : get_base_currency_details()})

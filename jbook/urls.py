@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'', include('common.urls')),
     url(r'', include('property.urls')),
+    url(r'', include('booking.urls')),
     url(r'^$', views.home_page, name='home_page'),
 ]
 

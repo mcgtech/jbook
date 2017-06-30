@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django_tables2',
     'crispy_forms',
     'constance',
+    'bootstrap_pagination',
 ]
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
@@ -138,12 +139,11 @@ LANGUAGE_CODE = 'en-GB'
 
 TIME_ZONE = 'Europe/London'
 
-USE_I18N = True
+USE_I18N = False
 
 USE_L10N = True
 
-USE_TZ = True
-
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -152,6 +152,10 @@ USE_TZ = True
 # STATIC_ROOT = "/var/www/django_projs/static/"
 # PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+
+# STATIC_URL = '/static/'
+# PROJECT_DIR = os.path.dirname(__file__)
+# STATICFILES_DIRS = (os.path.join(PROJECT_DIR, 'static'),)
 
 STATIC_URL = '/static/'
 PROJECT_DIR = os.path.dirname(__file__)

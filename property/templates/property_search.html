@@ -2,17 +2,65 @@
 {% block title %}Property search{% endblock %}
 {% load staticfiles %}
 
+{% block css %}
+    {% include 'partials/datatables_css_includes.html' %}
+    {% include 'partials/summernote_editor_css_includes.html' %}
+{% endblock %}
+{% block js %}
+    {% include 'partials/datatables_js_includes.html' %}
+    <script type="text/javascript" src="{% static 'js/property_search.js' %}"></script>
+{% endblock %}
 {% block content %}
- <table class="table table-bordered" id="properties">
+    <div id="filters" class="well">
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span><input type="text" value="" placeholder="from date" id="from_date" class="form-control form-text"/></div>
+                <div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span><input type="text" value="" placeholder="to date" id="to_date" class="form-control form-text"/></div>
+            </div>
+            <div class="col-sm-2">
+                <div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-map-marker"></span></span><input type="text" value="" placeholder="location" id="locn" class="form-control form-text"/></div>
+                <div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-dashboard"></span></span><input type="text" placeholder="radius" id="rad" class="form-control form-text"/></div>
+                <input type="text" value="" id="lat_holder" class="hidden"/>
+                <input type="text" value="" id="lng_holder" class="hidden"/>
+            </div>
+            <div class="col-sm-2">
+                <div class="input-group"><span class="input-group-addon">{{ base_ccy_details.ccy_symbol }}</span><input type="text" value="" placeholder="min rent" id="min_rent" class="form-control form-text"/></div>
+                <div class="input-group"><span class="input-group-addon">{{ base_ccy_details.ccy_symbol }}</span><input type="text" value="" placeholder="max cost" id="max_rent" class="form-control form-text"/></div>
+            </div>
+            <div class="col-sm-2">
+                <div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-bed"></span></span><input type="text" value="" placeholder="min sleeps" id="min_sleeps" class="form-control form-text"/></div>
+                <div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-bed"></span></span><input type="text" placeholder="max sleeps" id="max_sleeps" class="form-control form-text"/></div>
+            </div>
+            <div class="col-sm-2">
+                <button data-toggle="collapse" data-target="#core_attr_filters" id="collapse_core_attr_butt" aria-expanded="true" class="btn btn-default filter_butt"><span class="glyphicon glyphicon-collapse-up"></span> common attributes</button>
+                <button data-toggle="collapse" data-target="#attr_filters" id="collapse_attr_butt" aria-expanded="true" class="btn btn-default filter_butt"><span class="glyphicon glyphicon-collapse-up"></span> more attributes</button>
+            </div>
+            <div class="col-sm-2">
+                <div id="action_butts">
+                    <button type="button" id="apply_butt" name="op" value="Reset" class="btn btn-info">Apply</button>
+                    <button type="button" id="reset_butt" name="op" value="Reset" class="btn btn-default">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered" id="properties">
       <thead>
         <tr>
+          <th>Name</th>
+          <th>Code</th>
           <th>Type</th>
+          <th>Start Day</th>
+          <th>Booking Rule</th>
         </tr>
       </thead>
       <tbody>
           {% for property in properties %}
               <tr>
+                <td><a href="{{ property.get_absolute_url }}" target="_blank">{{ property.name }}</a></td>
+                <td>{{ property.code }}</td>
                 <td>{{ property.get_type_display }}</td>
+                <td>{{ property.get_start_day_display }}</td>
+                <td>{{ property.get_booking_rule_display }}</td>
               </tr>
           {% empty %}
               <tr class="no_data">
@@ -20,5 +68,5 @@
               </tr>
           {% endfor %}
       </tbody>
-</table>
+    </table>
 {% endblock %}

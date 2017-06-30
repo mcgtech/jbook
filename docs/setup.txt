@@ -43,6 +43,7 @@ pip install psycopg2
 pip install django-countries
 # https://github.com/Alir3z4/django-crequest
 pip install django-crequest
+pip install django-bootstrap-pagination
 
 # setup local database
 psql
@@ -70,6 +71,9 @@ python manage.py migrate booking
 python manage.py shell < all_build/setup_users_and_groups.py
 # change the admin password for the user created in setup_users_and_groups.py to a more secure password
 
+# setup test data
+python manage.py shell < all_build/setup_test_data.py
+
 # to run server
 cd /Users/stephenmcgonigal/ve/jbook
 source bin/activate
@@ -93,6 +97,7 @@ pip install Django==1.11.2
 # next do setup local database from above
 # then setup django tables from above
 # then setup groups and users
+# then setup test data
 python manage.py runserver
 
 

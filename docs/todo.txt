@@ -1,2 +1,4 @@
 change email from console to smtp
 change login_success to route users to appropriate screen on login eg sales to booking search
+view simliar
+ensure when delete booking tht property is not deleted

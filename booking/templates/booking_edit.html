@@ -2,9 +2,9 @@
 {% load common_extras %}
 {% block title %}
     {% if config.is_edit_form %}
-        Edit property
+        Edit booking
     {% else %}
-        Add new property
+        Add new booking
     {% endif %}
 {% endblock %}
 {% load staticfiles %}
@@ -18,11 +18,11 @@
     {% include 'partials/form_edit_js_includes.html' %}
     {% include 'partials/datepicker_js_includes.html' %}
     {% include 'partials/formset_js_includes.html' %}
-    <script type="text/javascript" src="{% static 'js/property_edit.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/booking_edit.js' %}"></script>
 {% endblock %}
 {% block content %}
     {% load crispy_forms_tags %}
-    <form action="{{ config.the_action }}" method="POST" id="property_edit_form" enctype="multipart/form-data">
+    <form action="{{ config.the_action }}" method="POST" id="booking_edit_form">
         {% crispy form %}
     </form>
 
