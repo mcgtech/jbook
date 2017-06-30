@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{#{% load common_extras %}#}
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/booking_calendar.css' %}">
+{% endblock %}
+{% block js %}
+    <table width="100%" class="table table-hover">
+        <tr>
+            <td width="20%" align="left">
+              &lt;&lt; <a href="/booking_calendar/{{ prop_id }}/{{PreviousYear}}/{{PreviousMonth}}/">{{PreviousMonthName}} {{PreviousYear}}</a>
+            </td>
+            <td width="20%" align="left">
+              &lt;&lt; <a href="/booking_calendar/{{ prop_id }}/{{YearBeforeThis}}/{{Month}}/">{{MonthName}} {{YearBeforeThis}}</a>
+            </td>
+            <td width="20%" align="center"><a href="/booking_calendar/{{ prop_id }}/{{ curr_year }}/{{ curr_month }}/">Today</a></td>
+            <td width="20%" align="right">
+              <a href="/booking_calendar/{{ prop_id }}/{{YearAfterThis}}/{{Month}}/">{{MonthName}} {{YearAfterThis}}</a> &gt;&gt;
+            </td>
+            <td width="20%" align="right">
+              <a href="/booking_calendar/{{ prop_id }}/{{NextYear}}/{{NextMonth}}/">{{NextMonthName}} {{NextYear}}</a> &gt;&gt;
+            </td>
+        </tr>
+    </table>
+    <div id="calendar">
+      {{Calendar}}
+    </div>
+{% endblock %}

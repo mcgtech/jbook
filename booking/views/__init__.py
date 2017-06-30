@@ -2,3 +2,4 @@
 # https://stackoverflow.com/questions/20010991/split-views-py-into-multiple-files
 from .booking_crud import *
 from .booking_search import *
+from .booking_calendar import *

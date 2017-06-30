@@ -56,3 +56,10 @@ class Property(Auditable):
     def get_absolute_url(self):
         from django.urls import reverse
         return reverse('property_edit', args=[str(self.id)])
+
+    def get_start_day_index_for_calendar(self):
+        # in HTMLCalendar firstweekday is an integer specifying the first day of the week. 0 is Monday (the default), 6 is Sunday
+        if self.start_day == 0:
+            return 6
+        else:
+            return self.start_day - 1

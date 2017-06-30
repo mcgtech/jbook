@@ -1,4 +1,4 @@
-# if building from scratch ( see below about checking out from git):
+# if building from scratch (see below about checking out from git):
 # https://denhartog.com/article/2015/02/04/how-i-structure-my-django-projects/#.WVT9LRPytuU
 mkdir /Users/stephenmcgonigal/ve
 cd /Users/stephenmcgonigal/ve
@@ -72,7 +72,8 @@ python manage.py shell < all_build/setup_users_and_groups.py
 # change the admin password for the user created in setup_users_and_groups.py to a more secure password
 
 # setup test data
-python manage.py shell < all_build/setup_test_data.py
+python manage.py shell < all_build/setup_test_prop_data.py
+python manage.py shell < all_build/setup_test_book_data.py
 
 # to run server
 cd /Users/stephenmcgonigal/ve/jbook

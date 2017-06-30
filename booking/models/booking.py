@@ -29,3 +29,17 @@ class Booking(Auditable):
     adults = models.IntegerField(default=2)
     children = models.IntegerField(default=0, null=True)
     infants = models.IntegerField(default=0, null=True)
+
+    class Meta:
+        ordering = ('from_date', ) # ascending from date order
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('booking_edit', args=[str(self.id)])
+
+    @staticmethod
+    def get_bookings_in_range(from_date, to_date, include_cancelled):
+        bookings = Booking.objects.filter(from_date__gte=from_date, from_date__lte=to_date,)
+        if include_cancelled == False:
+            bookings = bookings.filter(state!=CANC)
+        return bookings
