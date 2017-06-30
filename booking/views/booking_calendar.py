@@ -19,10 +19,6 @@ def booking_calendar(request, prop_id, pYear, pMonth):
     prop_start_day = prop.get_start_day_index_for_calendar()
     lYear = int(pYear)
     lMonth = int(pMonth)
-    shoulder_days = 6 # TODO: if we cant get shoulder days to work then either set ot 0 or remove the date handling code for this
-    _, num_days = calendar.monthrange(lYear, lMonth)
-    my_bookings = get_bookings_for_avail_cal(lYear, lMonth, shoulder_days, num_days)
-    lCalendar = BookingCalendar(my_bookings, prop_start_day, lYear, lMonth, num_days).formatmonth(lYear, lMonth)
     lPreviousYear = lYear
     lPreviousMonth = lMonth - 1
     if lPreviousMonth == 0:
@@ -35,6 +31,13 @@ def booking_calendar(request, prop_id, pYear, pMonth):
         lNextYear = lYear + 1
     lYearAfterThis = lYear + 1
     lYearBeforeThis = lYear - 1
+    first_day = dateutil.parser.parse(str(lYear) + '-' + str(lMonth) + '-01')
+    total_pre_month_shoulder_days = get_total_pre_month_shoulder_days(first_day, prop_start_day)
+    shoulder_days = 6
+    _, num_days = calendar.monthrange(lYear, lMonth)
+    _, prev_month_num_days = calendar.monthrange(lPreviousYear, lPreviousMonth)
+    my_bookings = get_bookings_for_avail_cal(lYear, lMonth, shoulder_days, num_days, first_day)
+    lCalendar = BookingCalendar(my_bookings, prop_start_day, lYear, lMonth, num_days, prev_month_num_days, total_pre_month_shoulder_days).formatmonth(lYear, lMonth)
     lToday = datetime.now()
 
     return render(request, 'booking_calendar.html', {'Calendar' : mark_safe(lCalendar),
@@ -55,26 +58,60 @@ def booking_calendar(request, prop_id, pYear, pMonth):
                                                    })
 
 
-def get_bookings_for_avail_cal(lYear, lMonth, shoulder_days, num_days_in_month):
+def get_bookings_for_avail_cal(lYear, lMonth, shoulder_days, num_days_in_month, first_day):
     # https://stackoverflow.com/questions/36155332/how-to-get-the-first-day-and-last-day-of-current-month-in-python
-    first_day = dateutil.parser.parse(str(lYear) + '-' + str(lMonth) + '-01')
     last_day = dateutil.parser.parse(str(lYear) + '-' + str(lMonth) + '-' + str(num_days_in_month))
     # 6 days either side so we can do the shoulder days
     from_date = first_day - timedelta(days=shoulder_days)
     to_date = last_day + timedelta(days=shoulder_days)
     my_bookings = Booking.get_bookings_in_range(from_date, to_date, True)
     return my_bookings
+#
+# def get_prev_month(curr_month):
+#     if curr_month == 1:
+#         return 12
+#     else:
+#         return curr_month - 1
+#
+# def get_next_month(curr_month):
+#     if curr_month == 12:
+#         return 1
+#     else:
+#         return curr_month + 1
 
+def get_total_pre_month_shoulder_days(first_day_of_month, prop_start_day):
+    d = first_day_of_month
+    delta = timedelta(days=1)
+    count = 0
+    while d.weekday() != prop_start_day:
+        d = d - delta
+        count = count + 1
+    return count - 1
 
 # http://drumcoder.co.uk/blog/2010/jun/13/monthly-calendar-django/
 class BookingCalendar(HTMLCalendar):
 
-    def __init__(self, bookings, start_day, lYear, lMonth, num_days_in_month):
+    def __init__(self, bookings, start_day, lYear, lMonth, num_days_in_month, prev_month_num_days, total_pre_month_shoulder_days):
         super(BookingCalendar, self).__init__(start_day)
         self.bookings = self.group_by_day(bookings, lYear, lMonth, num_days_in_month)
+        self.curr_month_dates_started = False
+        self.next_month_day = 0
+        self.prev_month_day = prev_month_num_days - total_pre_month_shoulder_days - 1
 
     def formatday(self, day, weekday):
-        if day != 0:
+        if day == 0:
+            if self.curr_month_dates_started:
+                # we are now processing days after current month
+                self.next_month_day = self.next_month_day + 1
+                day = self.next_month_day
+                return self.day_cell('noday', '<div class="dayNumber">%d</div>' % day)
+            else:
+                # we are processing shoulder days for previous month
+                self.prev_month_day = self.prev_month_day + 1
+                day = self.prev_month_day
+                return self.day_cell('noday', '<div class="dayNumber">%d</div>' % day)
+        else:
+            self.curr_month_dates_started = True
             cssclass = self.cssclasses[weekday]
             lToday = datetime.now().date()
             if lToday == date(self.year, self.month, day):
