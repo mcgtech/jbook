@@ -1,6 +1,7 @@
 from django.db import models
-from common.models import Auditable
+from common.models import *
 from property.models import Property
+from common.models.general import *
 
 class Booking(Auditable):
     BLOCK_OFF = 0
@@ -32,6 +33,9 @@ class Booking(Auditable):
 
     class Meta:
         ordering = ('from_date', ) # ascending from date order
+
+    def get_date_range_str(self):
+        return date_to_str(self.from_date) + ' to ' + date_to_str(self.to_date)
 
     def get_absolute_url(self):
         from django.urls import reverse
