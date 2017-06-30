@@ -44,6 +44,7 @@ def manage_property(request, property_id=None):
             action = get_form_edit_url(None, created_primary_entity.id, config.class_name)
             return redirect(action)
     else:
+        show_editing_msg(request, property_id, config.class_name)
         primary_entity_form = PropertyForm(instance=config.primary_entity, prefix=config.class_name, is_edit_form=config.is_edit_form,
                                            cancel_url=config.cancel_url, save_text=config.save_text)
 

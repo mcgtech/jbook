@@ -62,6 +62,11 @@ def get_form_edit_url(parent_id, primary_id, class_name):
 
     return url
 
+def show_editing_msg(request, entity_id, entity_class):
+    if entity_id is not None:
+        msg = 'Editing ' + entity_class.capitalize() + ' ' + entity_id
+        msg_once_only(request, msg, settings.SUCC_MSG_TYPE)
+
 # http://stackoverflow.com/questions/753052/strip-html-from-strings-in-python
 def form_errors_as_array(form):
     errors = []
