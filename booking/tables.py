@@ -9,6 +9,6 @@ class BookingTable(tables.Table):
     class Meta:
         model = Booking
         # fields to display in table
-        fields = ('property',)
+        fields = ('property', 'state')
         attrs = {"class": "paleblue table table-striped table-hover table-bordered"}
         sequence = ('booking_id', '...',)

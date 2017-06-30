@@ -42,6 +42,7 @@ def manage_booking(request, booking_id=None):
             apply_auditable_info(created_primary_entity, request)
             created_primary_entity.save()
             action = get_form_edit_url(None, created_primary_entity.id, config.class_name)
+            msg_once_only(request, 'Saved ' + config.class_name, settings.SUCC_MSG_TYPE)
             return redirect(action)
     else:
         primary_entity_form = PropertyForm(instance=config.primary_entity, prefix=config.class_name, is_edit_form=config.is_edit_form,
