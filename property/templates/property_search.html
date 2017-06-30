@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Property search{% endblock %}
+{% load staticfiles %}
+
+{% block content %}
+ <table class="table table-bordered" id="properties">
+      <thead>
+        <tr>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for property in properties %}
+              <tr>
+                <td>{{ property.get_type_display }}</td>
+              </tr>
+          {% empty %}
+              <tr class="no_data">
+                <td colspan="8">No properties</td>
+              </tr>
+          {% endfor %}
+      </tbody>
+</table>
+{% endblock %}

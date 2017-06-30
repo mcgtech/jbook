@@ -1,5 +1,5 @@
 from common.forms import *
-from .property import *
+from property.models import *
 from crispy_forms.layout import Layout
 from crispy_forms.bootstrap import TabHolder, Tab
 

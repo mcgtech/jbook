@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^accounts/reset/done/$', password_reset_complete, {'template_name': 'password_reset_complete.html'}, name='password_reset_complete'),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'', include('common.urls')),
+    url(r'', include('property.urls')),
     url(r'^$', views.home_page, name='home_page'),
 ]
 
