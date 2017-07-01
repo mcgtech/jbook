@@ -48,6 +48,17 @@ book.created_on = datetime.now()
 book.modified_on = datetime.now()
 book.property = prop
 book.from_date = '2017-07-21'
-book.to_date = '2017-07-28'
+book.to_date = '2017-07-24'
 book.state = Booking.PART_PAID
+book.save()
+
+book = Booking()
+book.created_by = admin
+book.modified_by = admin
+book.created_on = datetime.now()
+book.modified_on = datetime.now()
+book.property = prop
+book.from_date = '2017-07-24'
+book.to_date = '2017-08-05'
+book.state = Booking.PEND_PAY
 book.save()
