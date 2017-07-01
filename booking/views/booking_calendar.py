@@ -153,10 +153,6 @@ class BookingCalendar(HTMLCalendar):
                 month_dates[d.month][d.day].append(booking)
                 d = d + delta
         return month_dates
-        # field = lambda booking: booking.from_date.day
-        # return dict(
-        #     [(day, list(items)) for day, items in groupby(bookings, field)]
-        # )
 
     def day_cell(self, cssclass, body):
         return '<td class="%s">%s</td>' % (cssclass, body)
