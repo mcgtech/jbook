@@ -95,9 +95,10 @@ def get_bookings_cell_markup(month_data, day, cssclass):
         cssclass += ' filled'
         body = []
         for booking in month_data[day]:
-            body.append('<a href="%s">' % booking.get_absolute_url())
-            body.append(booking.get_date_range_str())
-            body.append('</a><br/>')
+            state = 'book_state_' + str(booking.state)
+            body.append('<div class="' + state + ' booking"><a href="%s">' % booking.get_absolute_url())
+            body.append(str(booking.pk) + ' ' + booking.get_date_range_str())
+            body.append('</a></div>')
         markup = ''.join(body)
 
     return cssclass, markup

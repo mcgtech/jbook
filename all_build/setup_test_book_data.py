@@ -15,7 +15,19 @@ book.created_on = datetime.now()
 book.modified_on = datetime.now()
 book.property = prop
 book.from_date = '2017-06-16'
+book.to_date = '2017-06-18'
+book.state = Booking.FULL_PAID
+book.save()
+
+book = Booking()
+book.created_by = admin
+book.modified_by = admin
+book.created_on = datetime.now()
+book.modified_on = datetime.now()
+book.property = prop
+book.from_date = '2017-06-18'
 book.to_date = '2017-06-23'
+book.state = Booking.PEND_PAY
 book.save()
 
 book = Booking()
@@ -26,6 +38,7 @@ book.modified_on = datetime.now()
 book.property = prop
 book.from_date = '2017-06-30'
 book.to_date = '2017-07-07'
+book.state = Booking.BLOCK_OFF
 book.save()
 
 book = Booking()
@@ -36,4 +49,5 @@ book.modified_on = datetime.now()
 book.property = prop
 book.from_date = '2017-07-21'
 book.to_date = '2017-07-28'
+book.state = Booking.PART_PAID
 book.save()
