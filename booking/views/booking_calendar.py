@@ -37,7 +37,8 @@ def booking_calendar(request, prop_id, pYear, pMonth):
     _, num_days = calendar.monthrange(lYear, lMonth)
     _, prev_month_num_days = calendar.monthrange(lPreviousYear, lPreviousMonth)
     my_bookings = get_bookings_for_avail_cal(lYear, lMonth, shoulder_days, num_days, first_day)
-    lCalendar = BookingCalendar(my_bookings, prop_start_day, lYear, lMonth, num_days, prev_month_num_days, total_pre_month_shoulder_days).formatmonth(lYear, lMonth)
+    lCalendar = BookingCalendar(my_bookings, prop_start_day, lYear, lMonth, prev_month_num_days,
+                                total_pre_month_shoulder_days, lPreviousMonth, lNextMonth).formatmonth(lYear, lMonth)
     lToday = datetime.now()
 
     return render(request, 'booking_calendar.html', {'Calendar' : mark_safe(lCalendar),
@@ -88,59 +89,74 @@ def get_total_pre_month_shoulder_days(first_day_of_month, prop_start_day):
         count = count + 1
     return count - 1
 
+def get_bookings_cell_markup(month_data, day, cssclass):
+    markup = ''
+    if day in month_data:
+        cssclass += ' filled'
+        body = []
+        for booking in month_data[day]:
+            body.append('<a href="%s">' % booking.get_absolute_url())
+            body.append(booking.get_date_range_str())
+            body.append('</a><br/>')
+        markup = ''.join(body)
+
+    return cssclass, markup
+
+
 # http://drumcoder.co.uk/blog/2010/jun/13/monthly-calendar-django/
 class BookingCalendar(HTMLCalendar):
 
-    def __init__(self, bookings, start_day, lYear, lMonth, num_days_in_month, prev_month_num_days, total_pre_month_shoulder_days):
+    def __init__(self, bookings, start_day, lYear, lMonth, prev_month_num_days, total_pre_month_shoulder_days, lPreviousMonth, lNextMonth):
         super(BookingCalendar, self).__init__(start_day)
-        self.bookings = self.group_by_day(bookings, lYear, lMonth, num_days_in_month)
+        self.bookings = self.group_by_day(bookings, lYear, lMonth, lPreviousMonth, lNextMonth)
         self.curr_month_dates_started = False
         self.next_month_day = 0
         self.prev_month_day = prev_month_num_days - total_pre_month_shoulder_days - 1
+        self.prev_month = lPreviousMonth
+        self.next_month = lNextMonth
 
     def formatday(self, day, weekday):
+        day_cell = None
         if day == 0:
+            cssclass = 'noday'
             if self.curr_month_dates_started:
                 # we are now processing days after current month
                 self.next_month_day = self.next_month_day + 1
                 day = self.next_month_day
-                return self.day_cell('noday', '<div class="dayNumber">%d</div>' % day)
+                _, cell_markup = get_bookings_cell_markup(self.bookings[self.next_month], day, cssclass)
             else:
                 # we are processing shoulder days for previous month
                 self.prev_month_day = self.prev_month_day + 1
                 day = self.prev_month_day
-                return self.day_cell('noday', '<div class="dayNumber">%d</div>' % day)
+                _, cell_markup = get_bookings_cell_markup(self.bookings[self.prev_month], day, cssclass)
         else:
             self.curr_month_dates_started = True
             cssclass = self.cssclasses[weekday]
             lToday = datetime.now().date()
             if lToday == date(self.year, self.month, day):
                 cssclass += ' today'
-            if day in self.bookings:
-                cssclass += ' filled'
-                body = []
-                for booking in self.bookings[day]:
-                    body.append('<a href="%s">' % booking.get_absolute_url())
-                    body.append(booking.get_date_range_str())
-                    body.append('</a><br/>')
-                return self.day_cell(cssclass, '<div class="dayNumber">%d</div> %s' % (day, ''.join(body)))
-            return self.day_cell(cssclass, '<div class="dayNumber">%d</div>' % day)
-        return self.day_cell('noday', '&nbsp;')
+            cssclass, cell_markup = get_bookings_cell_markup(self.bookings[self.month], day, cssclass)
+        return self.day_cell(cssclass, '<div class="dayNumber">%d</div> %s' % (day, cell_markup))
 
     def formatmonth(self, year, month):
         self.year, self.month = year, month
         return super(BookingCalendar, self).formatmonth(year, month)
 
-    def group_by_day(self, bookings, lYear, lMonth, num_days_in_month):
-        # month_dates = []
-        # for day in range(num_days_in_month-1):
-        #     month_dates.append(date(lYear, lMonth, day+1))
-        # for booking in bookings:
-        #     print(booking.from_date)
-        field = lambda booking: booking.from_date.day
-        return dict(
-            [(day, list(items)) for day, items in groupby(bookings, field)]
-        )
+    def group_by_day(self, bookings, lYear, lMonth, lPreviousMonth, lNextMonth):
+        month_dates = {lPreviousMonth : {}, lMonth : {}, lNextMonth: {}}
+        delta = timedelta(days=1)
+        for booking in bookings:
+            d = booking.from_date
+            while d <= booking.to_date:
+                if d.day not in month_dates[d.month]:
+                    month_dates[d.month][d.day] = []
+                month_dates[d.month][d.day].append(booking)
+                d = d + delta
+        return month_dates
+        # field = lambda booking: booking.from_date.day
+        # return dict(
+        #     [(day, list(items)) for day, items in groupby(bookings, field)]
+        # )
 
     def day_cell(self, cssclass, body):
         return '<td class="%s">%s</td>' % (cssclass, body)
