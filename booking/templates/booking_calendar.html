@@ -26,4 +26,15 @@
     <div id="calendar">
       {{Calendar}}
     </div>
+    <div id="avail_legend">
+        <span class="legend_item"><span class="legend_color book_state_5">■</span>pending approval</span>
+        <span class="legend_item"><span class="legend_color book_state_6">■</span>pending payment</span>
+        <span class="legend_item"><span class="legend_color book_state_4">■</span>partially paid</span>
+        <span class="legend_item"><span class="legend_color book_state_2">■</span>full paid</span>
+        <span class="legend_item"><span class="legend_color book_state_0">■</span>blocked off</span>
+        <span class="legend_item"><span class="legend_color book_state_1">■</span>cancelled</span>
+        <span class="legend_item"><span class="legend_color book_state_3">■</span>non agency</span>
+        <span class="legend_item"><span class="legend_color book_state_7">■</span>suspended</span>
+        <div id="book_help">Pending Approval and Non Agency bookings will not block off the calendar that the customer sees.</div>
+    </div>
 {% endblock %}

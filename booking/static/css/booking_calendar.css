@@ -14,15 +14,10 @@
     border: 1px solid #555;
     vertical-align: top;
     height: 120px;
-    padding: 2px;
 }
 
 #calendar td.noday {
     background-color: #eee;
-}
-
-#calendar td.filled {
-    background-color: #99ccff;
 }
 
 #calendar td.today {
@@ -33,46 +28,80 @@
     font-size: 16px !important;
     font-weight: bold;
 }
-#calendar a {
-    font-size: 10px;
+/*#calendar a {*/
+    /*font-size: 10px;*/
+/*}*/
+.booking {
+    background: #ffc;
+    padding: 8px;
+    color: black !important;
+}
+.booker, .book_dates, .book_rents
+{
+    font-size: 0.8em;
 }
  /*blocked off*/
 .book_state_0
 {
-    border-top:2px solid #333;
+    border-top:3px solid #333;
 }
 /*cancelled*/
 .book_state_1
 {
-    border-top:2px solid #c50712;
+    color: #c50712;
+    border-top:3px solid #c50712;
 }
 /*full paid*/
 .book_state_2
 {
-    border-top:2px solid #0cac3c;
+    color: #0cac3c;
+    border-top:3px solid #0cac3c;
 }
 /*non agency */
 .book_state_3
 {
-    border-top:2px solid #f8f870;
+    color: #f8f870;
+    border-top:3px solid #f8f870;
 }
 /*partially paid*/
 .book_state_4
 {
-    border-top:2px solid #f6ae31;
+    color: #f8f870;
+    border-top:3px solid #f8f870;
 }
 /*pending approval*/
 .book_state_5
 {
-    border-top:2px solid #a605f8;
+    color: #a605f8;
+    border-top:3px solid #a605f8;
 }
 /*pending payment*/
 .book_state_6
 {
-    border-top:2px solid #532af8;
+    color: #532af8;
+    border-top:3px solid #532af8;
 }
 /*suspended*/
 .book_state_7
 {
-    border-top:2px solid #46b8da;
+    color: #46b8da;
+    border-top:3px solid #46b8da;
+}
+#avail_legend {
+    background: #f8f8f8 none repeat scroll 0 0;
+    float: right;
+    margin-top: 10px;
+    padding: 13px;
+}
+.legend_item {
+    margin-right: 20px;
+}
+.legend_color {
+    margin-right: 4px;
+    border-top: none;
+}
+#book_help {
+    font-size: 0.8em;
+    text-align: right;
+    font-style: italic;
 }

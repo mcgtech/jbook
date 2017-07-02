@@ -95,10 +95,15 @@ def get_bookings_cell_markup(month_data, day, cssclass):
         cssclass += ' filled'
         body = []
         for booking in month_data[day]:
+            # TODO: fill in real details
             state = 'book_state_' + str(booking.state)
-            body.append('<div class="' + state + ' booking"><a href="%s">' % booking.get_absolute_url())
-            body.append(str(booking.pk) + ' ' + booking.get_date_range_str())
-            body.append('</a></div>')
+            html = '<div class="' + state + ' booking">'
+            html = html + '<div class="booker">Mrs Meldrum (AL7 4TQ)</div>'
+            html = html + '<a href="%s">' % booking.get_absolute_url() + str(booking.pk) + '</a>'
+            html = html + '<div class="book_dates">' + booking.get_date_range_str() + '</div>'
+            html = html + '<div class="book_rents">Rent: £465.00 Total: £465.00</div>'
+            html = html + '</a>'
+            body.append(html)
         markup = ''.join(body)
 
     return cssclass, markup
